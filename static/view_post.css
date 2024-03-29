@@ -1,0 +1,33 @@
+@font-face {
+    font-family: dine_in;
+    src: url(\static\FlameRegular.otf);
+  }
+.container{
+    padding: 3% 5% !important;
+}
+.blog_img{
+    border-radius: 15px;
+}
+.head_part{
+    margin-top: 10% !important;
+    font-family: dine_in;
+    font-weight: 400;
+}
+.text{
+    margin-top: 5% !important;
+}
+.image_part{
+    margin-top: 3% !important;
+}
+.row{
+    margin-top: 5% !important;
+}
+.update{
+    margin-right: 5%;
+}
+.post_content{
+    max-width: 100%; overflow-x: auto; white-space: pre-wrap;
+    font-family: dine_in;
+    font-weight: 400;
+    text-align: justify;
+}

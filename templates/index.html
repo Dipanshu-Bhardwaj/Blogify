@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blogify</title>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='logo.png') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a href="/">
+          <img src="/static/nav_logo.png" alt="" class="logo" />
+        </a>
+        <a class="navbar-brand brand-name" href="/">Blogify</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item searchit">
+              <form action="{{ url_for('search') }}" method="GET">
+                <input
+                  type="text"
+                  name="query"
+                  placeholder="Search Blogs"
+                  class="search_input"
+                />
+                <button type="submit" class="search_btn">Search</button>
+              </form>
+            </li>
+            <li class="nav-item hidden">hello guys</li>
+
+            <li class="nav-item space">hey</li>
+            <li class="nav-item dropdown">
+              {% if current_user.is_authenticated %}
+              <form action="{{ url_for('logout') }}" method="post">
+                <button type="submit" class="btn btn-outline-danger logout">
+                  Logout
+                </button>
+              </form>
+              {% endif %}
+            </li>
+            <li class="nav-item space">hey</li>
+            <li class="nav-item">
+              <button
+                type="submit"
+                class="btn btn-outline-info add_post"
+                onclick="redirectToAddPost()"
+              >
+                Add Post
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="content">
+      <!-- <form
+        action="{{ url_for('delete_all_posts') }}"
+        method="post"
+        onsubmit="return confirm('Are you sure you want to delete all posts?')"
+      >
+        <button type="submit" class="btn btn-danger">Delete All Posts</button>
+      </form>
+      <form
+        action="{{ url_for('delete_all_users') }}"
+        method="post"
+        onsubmit="return confirm('Are you sure you want to delete all users?')"
+      >
+        <button type="submit" class="btn btn-danger">Delete All Users</button>
+      </form> -->
+
+      <h1 class="heading">Blog Posts</h1>
+      <div class="row">
+        {% for post in posts %}
+        <div class="col-lg-4">
+          <div class="card">
+            <img
+              src="{{ url_for('post_image', post_id=post.id) }}"
+              alt="Post Image"
+              class="blog_img"
+            />
+            <div class="card-body" style="height: 235px; overflow: hidden">
+              <h5
+                class="card-title"
+                style="font-family: dine_in; font-weight: 400"
+              >
+                {{ post.title }}
+              </h5>
+              <p
+                class="card-text"
+                style="
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+                  display: -webkit-box;
+                  font-family: dine_in;
+                  font-weight: 400;
+                "
+              >
+                {{ post.content }}
+              </p>
+              <p
+                class="card-text"
+                style="font-family: dine_in; font-weight: 400"
+              >
+                Author: {{ post.author.username }}
+              </p>
+              <p
+                class="card-text"
+                style="font-family: dine_in; font-weight: 400"
+              >
+                Created At: {{ post.created_at }}
+              </p>
+              <div class="options">
+                <form
+                  action="{{ url_for('save_as_word', id=post.id) }}"
+                  method="get"
+                  class="gap"
+                >
+                  <button
+                    type="submit"
+                    class="btn btn-success btn-sm gap"
+                    style="font-family: dine_in; font-weight: 400"
+                  >
+                    Save Post
+                  </button>
+                </form>
+                <form
+                  action="{{ url_for('view_post', post_id=post.id) }}"
+                  method="get"
+                  class="gap"
+                >
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-sm gap"
+                    style="font-family: dine_in; font-weight: 400"
+                  >
+                    Read More
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
